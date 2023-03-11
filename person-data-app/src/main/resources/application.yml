@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: person-data-app
+  config:
+    import: "optional:configserver:http://${host}:9002"

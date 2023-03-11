@@ -1,0 +1,5 @@
+### Forum Data
+GET http://localhost:9000/forum-data/api/v1/user/2
+
+### Person Data
+GET http://localhost:9000/person-data/api/v1/person

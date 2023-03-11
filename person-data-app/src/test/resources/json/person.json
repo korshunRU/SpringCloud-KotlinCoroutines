@@ -1,0 +1,66 @@
+{
+  "results": [
+    {
+      "gender": "female",
+      "name": {
+        "title": "Mrs",
+        "first": "Luisa",
+        "last": "Vidal"
+      },
+      "location": {
+        "street": {
+          "number": 3359,
+          "name": "Avenida del Planetario"
+        },
+        "city": "Albacete",
+        "state": "Andalucía",
+        "country": "Spain",
+        "postcode": 22254,
+        "coordinates": {
+          "latitude": "-32.8365",
+          "longitude": "154.1805"
+        },
+        "timezone": {
+          "offset": "+5:45",
+          "description": "Kathmandu"
+        }
+      },
+      "email": "luisa.vidal@example.com",
+      "login": {
+        "uuid": "8f5c5200-23e4-4483-aa10-428bf6df331c",
+        "username": "beautifulfish250",
+        "password": "asdf1234",
+        "salt": "p3ssGnOP",
+        "md5": "04087c7d16aecb35e3ce872c28d2922c",
+        "sha1": "1d3795f000911cae2ab9ca58a43715a143ea0e00",
+        "sha256": "5e0d05eef29f3304a9bf20dcad446c6a237d4260e1792929edc5edc15253e199"
+      },
+      "dob": {
+        "date": "1973-03-28T08:04:19.918Z",
+        "age": 49
+      },
+      "registered": {
+        "date": "2016-04-18T10:31:35.935Z",
+        "age": 6
+      },
+      "phone": "948-922-071",
+      "cell": "681-775-853",
+      "id": {
+        "name": "DNI",
+        "value": "06740680-Z"
+      },
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/95.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/95.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/95.jpg"
+      },
+      "nat": "ES"
+    }
+  ],
+  "info": {
+    "seed": "715718d509e0fa32",
+    "results": 1,
+    "page": 1,
+    "version": "1.4"
+  }
+}

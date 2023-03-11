@@ -1,0 +1,17 @@
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:9001/eureka/
+  instance:
+    hostname: ${host}
+    prefer-ip-address: true
+
+integration:
+  base-url: https://jsonplaceholder.typicode.com/
+  url:
+    posts: /users/%d/posts
+    todos: /users/%d/todos
+    albums: /users/%d/albums

@@ -1,0 +1,20 @@
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:9001/eureka/
+  instance:
+    hostname: ${host}
+    prefer-ip-address: true
+
+integration:
+  base-url: https://randomuser.me/
+  url:
+    person: /api/
+  local:
+    country-app: lb://country-data-app
+    url:
+      country: /country-data/api/v1/country/%s
+

@@ -1,0 +1,86 @@
+version: '3.9'
+
+services:
+
+  config-service:
+    image: config-service:v1
+    build:
+      context: .
+      dockerfile: /config-service/Dockerfile
+    container_name: config-service
+    restart: always
+    ports:
+      - "9002:9002"
+    networks:
+    - backend
+
+  discovery-service:
+    image: discovery-service:v1
+    build:
+      context: .
+      dockerfile: /discovery-service/Dockerfile
+    container_name: discovery-service
+    restart: always
+    ports:
+      - "9001:9001"
+    depends_on:
+      - config-service
+    networks:
+      - backend
+
+  gateway-service:
+    image: gateway-service:v1
+    build:
+      context: .
+      dockerfile: /gateway-service/Dockerfile
+    container_name: gateway-service
+    restart: always
+    ports:
+      - "9000:9000"
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - backend
+
+  forum-data-app:
+    image: forum-data-app:v1
+    build:
+      context: .
+      dockerfile: /forum-data-app/Dockerfile
+    container_name: forum-data-app
+    restart: always
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - backend
+
+  country-data-app:
+    image: country-data-app:v1
+    build:
+      context: .
+      dockerfile: /country-data-app/Dockerfile
+    container_name: country-data-app
+    restart: always
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - backend
+
+  person-data-app:
+    image: person-data-app:v1
+    build:
+      context: .
+      dockerfile: /person-data-app/Dockerfile
+    container_name: person-data-app
+    restart: always
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - backend
+
+networks:
+  backend:
