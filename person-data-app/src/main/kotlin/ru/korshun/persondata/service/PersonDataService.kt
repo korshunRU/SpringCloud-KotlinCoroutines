@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.awaitBody
 import ru.korshun.commons.model.dto.countryData.Country
 import ru.korshun.commons.model.dto.personData.Person
 import ru.korshun.commons.model.response.dto.PersonData
-import ru.korshun.persondata.logger
+import ru.korshun.commons.model.util.getAsync
+import ru.korshun.commons.model.util.logger
 
 
 @Service
@@ -32,19 +32,14 @@ class PersonDataService {
   @Value("\${integration.local.url.country}")
   private lateinit var countryUrl: String
 
-  suspend fun getData(): PersonData {
-    val person = getPerson()
-    person.person.location.countryInfo = getCountry(person.person.location.country)
-    return person
-  }
+  suspend fun getData(): PersonData =
+    getPerson().apply {
+      person.location.countryInfo = getCountry(person.location.country)
+    }
 
   private suspend fun getPerson(): PersonData {
     logger.info { "getPerson start" }
-    val res = personWebClient
-      .get()
-      .uri { builder -> builder.path(personUrl).build() }
-      .retrieve()
-      .awaitBody<Person>()
+    val res = personWebClient.getAsync<Person>(personUrl)
     logger.info { "getPerson finish" }
     return PersonData(res.results[0])
   }
@@ -54,10 +49,7 @@ class PersonDataService {
     val res = countryWebClient
       .baseUrl(countryBaseUrl)
       .build()
-      .get()
-      .uri { builder -> builder.path(String.format(countryUrl, country)).build() }
-      .retrieve()
-      .awaitBody<Country>()
+      .getAsync<Country>(String.format(countryUrl, country))
     logger.info { "getCountry finish, country: $country" }
     return res
   }

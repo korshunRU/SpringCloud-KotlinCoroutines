@@ -10,6 +10,6 @@ eureka:
     prefer-ip-address: true
 
 integration:
-  base-url: https://161.35.252.68/
+  base-url: https://161.35.252.68/ # https://restcountries.com/
   url:
     country: /v3.1/name/%s

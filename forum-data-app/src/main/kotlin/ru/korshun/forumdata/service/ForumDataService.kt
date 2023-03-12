@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.awaitBody
 import ru.korshun.commons.model.dto.forumData.Albums
 import ru.korshun.commons.model.dto.forumData.Post
 import ru.korshun.commons.model.dto.forumData.Todos
 import ru.korshun.commons.model.response.dto.ForumData
-import ru.korshun.forumdata.logger
+import ru.korshun.commons.model.util.getAsync
+import ru.korshun.commons.model.util.logger
 
 @Service
 class ForumDataService {
@@ -46,33 +46,21 @@ class ForumDataService {
 
   private suspend fun getPosts(id: Long): List<Post> {
     logger.info { "getPosts start, id: $id" }
-    val res = webClient
-      .get()
-      .uri { builder -> builder.path(String.format(postsUrl, id)).build() }
-      .retrieve()
-      .awaitBody<List<Post>>()
+    val res = webClient.getAsync<List<Post>>(String.format(postsUrl, id))
     logger.info { "getPosts finish, id: $id" }
     return res
   }
 
   private suspend fun getTodos(id: Long): List<Todos> {
     logger.info { "getTodos start, id: $id" }
-    val res =  webClient
-      .get()
-      .uri { builder -> builder.path(String.format(todosUrl, id)).build() }
-      .retrieve()
-      .awaitBody<List<Todos>>()
+    val res =  webClient.getAsync<List<Todos>>(String.format(todosUrl, id))
     logger.info { "getTodos finish, id: $id" }
     return res
   }
 
   private suspend fun getAlbums(id: Long): List<Albums> {
     logger.info { "getAlbums start, id: $id" }
-    val res =  webClient
-      .get()
-      .uri { builder -> builder.path(String.format(albumsUrl, id)).build() }
-      .retrieve()
-      .awaitBody<List<Albums>>()
+    val res =  webClient.getAsync<List<Albums>>(String.format(albumsUrl, id))
     logger.info { "getAlbums finish, id: $id" }
     return res
   }
