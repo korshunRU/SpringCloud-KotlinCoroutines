@@ -4,9 +4,10 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:9001/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
   instance:
-    hostname: ${host}
+    hostname: ${eureka_host}
+    port: ${eureka_port}
     prefer-ip-address: true
 
 integration:

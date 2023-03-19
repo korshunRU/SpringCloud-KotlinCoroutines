@@ -20,6 +20,10 @@ services:
       context: .
       dockerfile: /discovery-service/Dockerfile
     container_name: discovery-service
+    environment:
+      - config_host=host.docker.internal
+      - config_port=9002
+      - eureka_host=host.docker.internal
     restart: always
     ports:
       - "9001:9001"
@@ -34,6 +38,11 @@ services:
       context: .
       dockerfile: /gateway-service/Dockerfile
     container_name: gateway-service
+    environment:
+      - config_host=host.docker.internal
+      - config_port=9002
+      - eureka_host=host.docker.internal
+      - eureka_port=9001
     restart: always
     ports:
       - "9000:9000"
@@ -49,6 +58,11 @@ services:
       context: .
       dockerfile: /forum-data-app/Dockerfile
     container_name: forum-data-app
+    environment:
+      - config_host=host.docker.internal
+      - config_port=9002
+      - eureka_host=host.docker.internal
+      - eureka_port=9001
     restart: always
     depends_on:
       - config-service
@@ -62,6 +76,11 @@ services:
       context: .
       dockerfile: /country-data-app/Dockerfile
     container_name: country-data-app
+    environment:
+      - config_host=host.docker.internal
+      - config_port=9002
+      - eureka_host=host.docker.internal
+      - eureka_port=9001
     restart: always
     depends_on:
       - config-service
@@ -75,6 +94,11 @@ services:
       context: .
       dockerfile: /person-data-app/Dockerfile
     container_name: person-data-app
+    environment:
+      - config_host=host.docker.internal
+      - config_port=9002
+      - eureka_host=host.docker.internal
+      - eureka_port=9001
     restart: always
     depends_on:
       - config-service

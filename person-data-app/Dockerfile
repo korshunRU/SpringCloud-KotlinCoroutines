@@ -7,4 +7,4 @@ FROM openjdk:11-jdk-oracle
 ARG JAR_FILE=person-data-app-0.0.1-SNAPSHOT.jar
 WORKDIR /opt/app
 COPY --from=maven /usr/src/app/person-data-app/target/${JAR_FILE} /opt/app/
-ENTRYPOINT ["java","-jar","-Dhost=host.docker.internal","person-data-app-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","person-data-app-0.0.1-SNAPSHOT.jar"]

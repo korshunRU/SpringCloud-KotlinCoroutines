@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forum-data-app-deployment
+  namespace: cloud-async
+  labels:
+    app: forum-data-app-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: forum-data-app-deployment
+      labels:
+        app: forum-data-app-deployment
+    spec:
+      containers:
+        - name: forum-data-app
+          image: forum-data-app:v1
+          env:
+            - name: config_host
+              value: config-srv
+            - name: config_port
+              value: "9002"
+            - name: eureka_host
+              value: discovery-srv
+            - name: eureka_port
+              value: "9001"
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+  selector:
+    matchLabels:
+      app: forum-data-app-deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    visualize: "true"
+  name: forum-data-app
+  namespace: cloud-async
+spec:
+  selector:
+    app: forum-data-app-deployment
+  ports:
+    - name: forum
+      protocol: TCP
+      port: 30910
+      targetPort: 30910
+  type: ClusterIP

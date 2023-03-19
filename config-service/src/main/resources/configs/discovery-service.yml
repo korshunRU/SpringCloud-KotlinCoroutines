@@ -8,7 +8,7 @@ eureka:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   instance:
-    hostname: ${host}
+    hostname: ${eureka_host}
     prefer-ip-address: true
   server:
     renewal-percent-threshold: 0.25

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-service-deployment
+  namespace: cloud-async
+  labels:
+    app: discovery-service-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: discovery-service-deployment
+      labels:
+        app: discovery-service-deployment
+    spec:
+      containers:
+        - name: discovery-service
+          image: discovery-service:v1
+          env:
+            - name: config_host
+              value: config-srv
+            - name: config_port
+              value: "9002"
+            - name: eureka_host
+              value: discovery-srv
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9001
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+  selector:
+    matchLabels:
+      app: discovery-service-deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    visualize: "true"
+  name: discovery-srv
+  namespace: cloud-async
+spec:
+  selector:
+    app: discovery-service-deployment
+  ports:
+    - name: discovery
+      protocol: TCP
+      port: 9001
+      targetPort: 9001
+      nodePort: 30901
+  type: NodePort

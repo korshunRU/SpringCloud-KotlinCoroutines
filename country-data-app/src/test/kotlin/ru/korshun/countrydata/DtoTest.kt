@@ -21,7 +21,7 @@ class DtoTest {
   fun dtoTest() {
     val country = getJson("country.json", CountryData::class.java)
     assert(country != null)
-    assert(country[0].name.common == "Ukraine")
+    assert(country[0].name!!.common == "Ukraine")
   }
 
 }

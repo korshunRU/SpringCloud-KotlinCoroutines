@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-service-deployment
+  namespace: cloud-async
+  labels:
+    app: config-service-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: config-service-deployment
+      labels:
+        app: config-service-deployment
+    spec:
+      containers:
+        - name: config-service
+          image: config-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9002
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+  selector:
+    matchLabels:
+      app: config-service-deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    visualize: "true"
+  name: config-srv
+  namespace: cloud-async
+spec:
+  selector:
+    app: config-service-deployment
+  ports:
+    - name: config
+      protocol: TCP
+      port: 9002
+      targetPort: 9002
+  type: ClusterIP

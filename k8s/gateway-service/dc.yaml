@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service-deployment
+  namespace: cloud-async
+  labels:
+    app: gateway-service-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: gateway-service-deployment
+      labels:
+        app: gateway-service-deployment
+    spec:
+      containers:
+        - name: gateway-service
+          image: gateway-service:v1
+          env:
+            - name: config_host
+              value: config-srv
+            - name: config_port
+              value: "9002"
+            - name: eureka_host
+              value: discovery-srv
+            - name: eureka_port
+              value: "9001"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9000
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+  selector:
+    matchLabels:
+      app: gateway-service-deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-load-balancer
+spec:
+  selector:
+    app: gateway-service-deployment
+  ports:
+    - port: 9000
+      targetPort: 9000
+  type: LoadBalancer
